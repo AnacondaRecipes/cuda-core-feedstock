@@ -68,8 +68,7 @@ about:
   # Note: Check for cuda-core license, it might be Apache-2.0 in the future releases
   license: LicenseRef-NVIDIA-SOFTWARE-LICENSE
   license_file: LICENSE
-  license_url: https://github.com/NVIDIA/cuda-python/blob/main/LICENSE
-  summary: "cuda.core: (experimental) Pythonic CUDA module"
+  summary: Pythonic CUDA module (experimental)
   description: |
     cuda.core bridges Python's productivity with CUDA's performance through intuitive and pythonic APIs.
     The mission is to provide users full access to all of the core CUDA features in Python, such as
