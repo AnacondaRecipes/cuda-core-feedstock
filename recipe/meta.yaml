@@ -55,6 +55,7 @@ test:
   commands:
     - pip check
     - python -c "from cuda.core.experimental import Device; print(dir(Device))"
+    - python -c "from cuda.core.experimental import Buffer; print(dir(Buffer))"
     - python -c "from cuda.core.experimental import utils; print(dir(utils))"
 
 about:
