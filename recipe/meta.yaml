@@ -1,9 +1,6 @@
 {% set name = "cuda-core" %}
-{% set version = "0.1.1" %}
+{% set version = "0.3.2" %}
 {% set number = 0 %}
-
-# Note: Adding these due to use of older cuda-core version
-{% set cuda_python_version = "12.8.0" %}
 
 {% set target_name = "x86_64-linux" %}  # [linux64]
 {% set target_name = "sbsa-linux" %}  # [aarch64]
@@ -17,11 +14,8 @@ package:
   version: {{ version }}
 
 source:
-  # url: https://github.com/NVIDIA/cuda-python/releases/download/{{ name }}-v{{ version }}/cuda-python-{{ name }}-v{{ version }}.tar.gz
-  # sha256: 47a6181f1a8fa1db2df31251c0bb654558b3eddf47c41964bfa39965a46c7b41
-  # Note: Starting with cuda-core v0.2.0, the above URL can be used
-  url: https://github.com/NVIDIA/cuda-python/releases/download/v{{ cuda_python_version }}/cuda-python-v{{ cuda_python_version }}.tar.gz
-  sha256: 6cc8db1e65a1f995e289b64f9b9bff4362321d36ecf9b54eb192d0781475fbca
+  url: https://github.com/NVIDIA/cuda-python/releases/download/{{ name }}-v{{ version }}/cuda-python-{{ name }}-v{{ version }}.tar.gz
+  sha256: 190f65d08bf412bec7235e89d9d30ceaa38ba348e48a0385e791517be7c221f6
 
 build:
   number: {{ number }}
