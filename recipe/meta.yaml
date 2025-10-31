@@ -41,7 +41,7 @@ requirements:
     - cython >=3.0
     # cuda-core depends on cuda-bindings and cuda-bindings is minor version compatible with CUDA Toolkit >=12
     # Ref: https://docs.nvidia.com/deploy/cuda-compatibility/minor-version-compatibility.html
-    - {{ pin_compatible('cuda-bindings', min_pin='x', max_pin='x') }}
+    - cuda-bindings {{ cuda_major_version }}.*
   run:
     - python
     - numpy
