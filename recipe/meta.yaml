@@ -2,7 +2,7 @@
 {% set version = "0.1.1" %}
 {% set number = 0 %}
 
-# Note: Adding these due to use of older core-core version
+# Note: Adding these due to use of older cuda-core version
 {% set cuda_python_version = "12.8.0" %}
 
 {% set target_name = "x86_64-linux" %}  # [linux64]
