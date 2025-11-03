@@ -1,6 +1,6 @@
 {% set name = "cuda-core" %}
 {% set version = "0.3.2" %}
-{% set number = 0 %}
+{% set number = 1 %}
 
 {% set target_name = "x86_64-linux" %}  # [linux64]
 {% set target_name = "sbsa-linux" %}  # [aarch64]
