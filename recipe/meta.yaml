@@ -20,7 +20,7 @@ source:
 build:
   number: {{ number }}
   string: cuda{{ cuda_major_version }}_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
-  skip: true  # [py < 310 or osx]
+  skip: true  # [py<310 or osx]
   script_env:
     - CUDA_PATH={{ PREFIX ~ subdir }}
 
@@ -33,7 +33,7 @@ requirements:
     - python                              # [build_platform != target_platform]
     - cython                              # [build_platform != target_platform]
   host:
-    - cython
+    - cython >=3.2,<3.3
     - pip
     - python
     - setuptools
@@ -51,10 +51,12 @@ test:
   requires:
     - pip
   imports:
+    - cuda.core
     - cuda.core.experimental
   commands:
     - pip check
-    - python -c "from cuda.core.experimental import Device, Buffer, utils; print('ok')"
+    - python -c "from cuda.core import Device, Buffer, utils; print('ok')"
+    - python -c "from cuda.core.experimental import Device, Buffer, utils; print('experimental ok')"
 
 about:
   home: https://nvidia.github.io/cuda-python/cuda-core
