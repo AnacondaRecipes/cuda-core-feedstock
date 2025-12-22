@@ -1,5 +1,5 @@
 {% set name = "cuda-core" %}
-{% set version = "0.4.2" %}
+{% set version = "0.5.0" %}
 {% set number = 0 %}
 
 {% set target_name = "x86_64-linux" %}  # [linux64]
@@ -15,12 +15,12 @@ package:
 
 source:
   url: https://github.com/NVIDIA/cuda-python/releases/download/{{ name }}-v{{ version }}/cuda-python-{{ name }}-v{{ version }}.tar.gz
-  sha256: 4862f0a44534a0049088458f8930f7387687dbdab9e2e7ea95dc668b98f2ac72
+  sha256: c2b68fe7c5557a33d275f4516d781738566f90f9b6caab43844401033e21b670
 
 build:
   number: {{ number }}
   string: cuda{{ cuda_major_version }}_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
-  skip: true  # [py < 310 or osx]
+  skip: true  # [py<310 or osx]
   script_env:
     - CUDA_PATH={{ PREFIX ~ subdir }}
 
@@ -33,7 +33,7 @@ requirements:
     - python                              # [build_platform != target_platform]
     - cython                              # [build_platform != target_platform]
   host:
-    - cython
+    - cython >=3.2,<3.3
     - pip
     - python
     - setuptools
@@ -51,10 +51,12 @@ test:
   requires:
     - pip
   imports:
+    - cuda.core
     - cuda.core.experimental
   commands:
     - pip check
-    - python -c "from cuda.core.experimental import Device, Buffer, utils; print('ok')"
+    - python -c "from cuda.core import Device, Buffer, utils; print('ok')"
+    - python -c "from cuda.core.experimental import Device, Buffer, utils; print('experimental ok')"
 
 about:
   home: https://nvidia.github.io/cuda-python/cuda-core
