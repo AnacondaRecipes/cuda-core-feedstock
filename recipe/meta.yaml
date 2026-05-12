@@ -46,11 +46,12 @@ requirements:
     - cuda-profiler-api
     - cuda-bindings {{ cuda_major_version }}.*
     - cuda-version {{ cuda_major_version }}.*
+    - cuda-pathfinder >=1.5
   run:
     - python
     - numpy
     - cuda-pathfinder >=1.4.2,<2
-    - backports.strenum  # [py < 311]
+    - backports.strenum  # [py<311]
     - {{ pin_compatible("cuda-bindings", min_pin="x", max_pin="x") }}
     - {{ pin_compatible("cuda-version", min_pin="x", max_pin="x") }}
 
@@ -59,11 +60,16 @@ test:
     - pip
   imports:
     - cuda.core
-    - cuda.core.experimental
+    - cuda.core.checkpoint
+    - cuda.core.graph
+    - cuda.core.typing
+    - cuda.core.system
+    - cuda.core.utils
   commands:
     - pip check
-    - python -c "from cuda.core import Device, Buffer, utils; print('ok')"
-    - python -c "from cuda.core.experimental import Device, Buffer, utils; print('experimental ok')"
+    - python -c "from cuda.core import __version__; print('cuda-core version:', __version__)"
+    - python -c "from cuda.core import Device, Buffer, Kernel, Event; print('ok')"
+    - python -c "from cuda.core.graph import Graph, GraphNode, GraphDefinition; print('graph ok')"
 
 about:
   home: https://nvidia.github.io/cuda-python/cuda-core
@@ -80,6 +86,8 @@ about:
   dev_url: https://github.com/NVIDIA/cuda-python
 
 extra:
+  skip-lints:
+    - deprecate_license_url
   recipe-maintainers:
     - conda-forge/cuda-python
     - bdice
