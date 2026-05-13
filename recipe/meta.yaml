@@ -1,5 +1,5 @@
 {% set name = "cuda-core" %}
-{% set version = "0.7.0" %}
+{% set version = "1.0.1" %}
 {% set number = 0 %}
 
 {% set target_name = "x86_64-linux" %}  # [linux64]
@@ -15,7 +15,7 @@ package:
 
 source:
   url: https://github.com/NVIDIA/cuda-python/releases/download/{{ name }}-v{{ version }}/cuda-python-{{ name }}-v{{ version }}.tar.gz
-  sha256: 2bd2d6aa1eb12449d632907d76165d84395f24eaa9d565df69b552538b6a357b
+  sha256: 6f4ff33299705f9190c53f1393a3bd1894bcc7ad656d09dd55ddfe7959efb287
 
 build:
   number: {{ number }}
@@ -23,6 +23,9 @@ build:
   skip: true  # [py<310 or osx]
   script_env:
     - CUDA_PATH={{ PREFIX ~ subdir }}
+  missing_dso_whitelist:
+    - "*/torch_cpu.dll"      # [win]
+    - "*/torch_python.dll"   # [win]
   ignore_run_exports_from:
     - cuda-cudart-dev
     - cuda-nvrtc-dev
@@ -43,10 +46,12 @@ requirements:
     - cuda-profiler-api
     - cuda-bindings {{ cuda_major_version }}.*
     - cuda-version {{ cuda_major_version }}.*
+    - cuda-pathfinder >=1.5
   run:
     - python
     - numpy
     - cuda-pathfinder >=1.4.2,<2
+    - backports.strenum  # [py<311]
     - {{ pin_compatible("cuda-bindings", min_pin="x", max_pin="x") }}
     - {{ pin_compatible("cuda-version", min_pin="x", max_pin="x") }}
 
@@ -55,11 +60,16 @@ test:
     - pip
   imports:
     - cuda.core
-    - cuda.core.experimental
+    - cuda.core.checkpoint
+    - cuda.core.graph
+    - cuda.core.typing
+    - cuda.core.system
+    - cuda.core.utils
   commands:
     - pip check
-    - python -c "from cuda.core import Device, Buffer, utils; print('ok')"
-    - python -c "from cuda.core.experimental import Device, Buffer, utils; print('experimental ok')"
+    - python -c "from cuda.core import __version__; print('cuda-core version:', __version__)"
+    - python -c "from cuda.core import Device, Buffer, Kernel, Event; print('ok')"
+    - python -c "from cuda.core.graph import Graph, GraphNode, GraphDefinition; print('graph ok')"
 
 about:
   home: https://nvidia.github.io/cuda-python/cuda-core
@@ -76,6 +86,8 @@ about:
   dev_url: https://github.com/NVIDIA/cuda-python
 
 extra:
+  skip-lints:
+    - deprecate_license_url
   recipe-maintainers:
     - conda-forge/cuda-python
     - bdice
