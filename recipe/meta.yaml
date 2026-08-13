@@ -1,5 +1,5 @@
 {% set name = "cuda-core" %}
-{% set version = "1.1.0" %}
+{% set version = "1.1.1" %}
 {% set number = 0 %}
 
 {% set target_name = "x86_64-linux" %}  # [linux64]
@@ -14,8 +14,11 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/NVIDIA/cuda-python/releases/download/{{ name }}-v{{ version }}/cuda-python-{{ name }}-v{{ version }}.tar.gz
-  sha256: 72aa0c24081242ce14d1aae0a41759ee92f82f6b716ceb9278201de091f93c3d
+  # Temporarily switch to git URL till Nvidia fixes their GitHub releases
+  #url: https://github.com/NVIDIA/cuda-python/releases/download/{{ name }}-v{{ version }}/cuda-python-{{ name }}-v{{ version }}.tar.gz
+  #sha256: 72aa0c24081242ce14d1aae0a41759ee92f82f6b716ceb9278201de091f93c3d
+  git_url: https://github.com/NVIDIA/cuda-python.git
+  git_rev: ad339abf96a8304be53408952119ce0313358a67  # tag: cuda-core-v1.1.1
 
 build:
   number: {{ number }}
