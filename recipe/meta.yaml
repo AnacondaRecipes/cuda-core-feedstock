@@ -39,11 +39,11 @@ requirements:
     - {{ stdlib('c') }}
     - git
   host:
-    - cython >=3.2,<3.3
+    - cython >=3.2.5,<3.3
     - pip
     - python
     - setuptools >=80
-    - setuptools-scm >=8
+    - setuptools-scm >=8,!=10.1
     - cuda-cudart-dev
     - cuda-nvrtc-dev
     - cuda-profiler-api
