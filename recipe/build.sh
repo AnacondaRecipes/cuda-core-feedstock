@@ -1,7 +1,9 @@
 #!/bin/bash
+set -euo pipefail
 
 DIR_NAME="$(echo $PKG_NAME | tr '-' '_')"
 cd $DIR_NAME
+
 $PYTHON -m pip install . --no-deps --no-build-isolation -vv
 
 # Clean up Cython temporary files from site-packages directory
