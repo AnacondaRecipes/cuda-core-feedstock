@@ -1,13 +1,14 @@
 {% set name = "cuda-core" %}
 {% set version = "1.2.0" %}
-{% set number = 0 %}
+{% set number = 1 %}
 
-{% set target_name = "x86_64-linux" %}  # [linux64]
-{% set target_name = "sbsa-linux" %}  # [aarch64]
-{% set target_name = "x64" %}  # [win64]
+{% set target_name = "x86_64-linux" %}  # [linux and x86_64]
+{% set target_name = "sbsa-linux" %}  # [linux and aarch64]
+{% set target_name = "x64" %}  # [win and x86_64]
+{% set target_name = "arm64" %}  # [win and arm64]
 {% set subdir = "" %}
-{% set subdir = os.sep.join(["", "targets", target_name]) %}  # [linux64 or aarch64]
-{% set subdir = os.sep.join(["", "Library"]) %}               # [win64]
+{% set subdir = os.sep.join(["", "targets", target_name]) %}  # [(linux and x86_64) or (linux and aarch64)]
+{% set subdir = os.sep.join(["", "Library"]) %}               # [(win and x86_64) or (win and arm64)]
 
 package:
   name: {{ name|lower }}
