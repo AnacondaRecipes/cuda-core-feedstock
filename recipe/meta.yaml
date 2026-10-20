@@ -1,14 +1,13 @@
 {% set name = "cuda-core" %}
-{% set version = "1.2.1" %}
+{% set version = "1.2.2" %}
 {% set number = 0 %}
-
 {% set target_name = "x86_64-linux" %}  # [linux and x86_64]
 {% set target_name = "sbsa-linux" %}  # [linux and aarch64]
 {% set target_name = "x64" %}  # [win and x86_64]
 {% set target_name = "arm64" %}  # [win and arm64]
 {% set subdir = "" %}
-{% set subdir = os.sep.join(["", "targets", target_name]) %}  # [(linux and x86_64) or (linux and aarch64)]
-{% set subdir = os.sep.join(["", "Library"]) %}               # [(win and x86_64) or (win and arm64)]
+{% set subdir = 'os.sep.join(["", "targets", target_name])' %}  # [(linux and x86_64) or (linux and aarch64)]
+{% set subdir = 'os.sep.join(["", "Library"])' %}  # [(win and x86_64) or (win and arm64)]
 
 package:
   name: {{ name|lower }}
@@ -16,19 +15,19 @@ package:
 
 source:
   url: https://github.com/NVIDIA/cuda-python/releases/download/{{ name }}-v{{ version }}/cuda-python-{{ name }}-v{{ version }}.tar.gz
-  sha256: 6adaaf5a73dcea412ef2766131270126609ae1cbd79644e9e04b38f9c08c2336
+  sha256: 5eea9467ceb3adea470c104cd4497420a75367880d8d6fd5223b6b279aa492ac
   #git_url: https://github.com/NVIDIA/cuda-python.git
   #git_rev: ad339abf96a8304be53408952119ce0313358a67  # tag: cuda-core-v1.1.1
 
 build:
-  number: {{ number }}
+  number: 0
   string: cuda{{ cuda_major_version }}_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
   skip: true  # [py<310 or osx]
   script_env:
     - CUDA_PATH={{ PREFIX ~ subdir }}
   missing_dso_whitelist:
-    - "*/torch_cpu.dll"      # [win]
-    - "*/torch_python.dll"   # [win]
+    - "*/torch_cpu.dll"  # [win]
+    - "*/torch_python.dll"  # [win]
   ignore_run_exports_from:
     - cuda-cudart-dev
     - cuda-nvrtc-dev
@@ -43,14 +42,15 @@ requirements:
     - cython >=3.2.5,<3.3
     - pip
     - python
-    - setuptools >=80
-    - setuptools-scm >=8,!=10.1
+    - setuptools >=77.0.0
+    - setuptools-scm
     - cuda-cudart-dev
     - cuda-nvrtc-dev
     - cuda-profiler-api
     - cuda-bindings {{ cuda_major_version }}.*
     - cuda-version {{ cuda_major_version }}.*
     - cuda-pathfinder >=1.5
+    - packaging
   run:
     - python
     - numpy
